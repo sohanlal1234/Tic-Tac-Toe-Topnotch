@@ -1,4 +1,0 @@
-File: jquery-1.11.0.min.js
-Source: https://code.jquery.com/
-License: https://github.com/jquery/jquery/blob/master/LICENSE.txt
-Notes: Bundled with script.js in dist/js/bundle.js
