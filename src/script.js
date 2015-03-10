@@ -1,5 +1,7 @@
 var $ = require('./jquery-1.11.0.min.js');
 
+
+
 $(document).ready(function() {
 	var xMark = '<div class="token"><div class="x-1"></div><div class="x-2"></div></div>';
 	var oMark = '<div class="token"><div class="o"></div></div>';
@@ -63,6 +65,26 @@ $(document).ready(function() {
 		if (info != 'Tie!') {
 			info = info.toUpperCase() + ' wins!';
 		}
+
+		$('body').append('<div class="modal" style="opacity: 0; transform: translate(-50%, -50%) scale(0.8, 0.8)">' + info + '</div>');
+
+		// Must be a timeout so that the opacity transition will happen
+		setTimeout(function() {
+			$('.modal').css('opacity', 1);
+			$('.modal').css('transform', 'translate(-50%, -50%) scale(1, 1)');
+		}, 50);
+
+		$('.modal').on('click', function() {
+			newGame();
+
+			// $(this).css('opacity', 0);
+			//
+			// setTimeout(function() {
+			// 	$(this).remove();
+			//
+			// 	newGame();
+			// }, 900);
+		});
 
 		$('#turn-or-win').append(info + '<br>');
 		$('#x-count').append(winCounts["x"]);
@@ -132,6 +154,15 @@ $(document).ready(function() {
 	});
 
 	var newGame = function() {
+		$('.modal').unbind('click');
+
+		$('.modal').css('opacity', 0);
+		$('.modal').css('transform', 'translate(-50%, -50%) scale(0.8, 0.8)');
+
+		setTimeout(function() {
+			$('.modal').remove();
+		}, 500);
+
 		$('.board .tile').empty();
 		showTurn();
 		winner = '_';
@@ -141,7 +172,8 @@ $(document).ready(function() {
 	};
 
 	$('#new-game').on('click', newGame);
-	$('.board .tile').on('dblclick', newGame);
+	//$('.board .tile').on('dblclick', newGame);
+	// ^ not needed, now there is new game from click modal
 
 	var goComputer = function() {
 		if (winner == "_" && cpuString == turnString) {
@@ -215,18 +247,25 @@ $(document).ready(function() {
 		}
 	});
 
-	$( window ).on('scroll', function() {
+	$(window).on('scroll', function() {
 		//console.log($( window ).scrollTop());
 
-		var scrollTop = $( window ).scrollTop();
+		var scrollTop = $(window).scrollTop();
 
 		var bottomText = document.getElementById('bottom-text');
 
-		if (scrollTop > 15) {
+		if (scrollTop > 0) {
 			bottomText.style.opacity = 1;
 		}
 		else {
 			bottomText.style.opacity = 0;
+		}
+	});
+
+	// If there is no scroll bar, show the bottom text
+	$(window).on('resize', function() {
+		if ($(document).height() > $(window).height()) {
+			document.getElementById('bottom-text').style.opacity = 1;
 		}
 	});
 });
