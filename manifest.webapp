@@ -1,6 +1,6 @@
 {
 	"name": "Tic Tac Toe Topnotch",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Place 3 in a row to win.",
 	"launch_path": "/index.html",
 	"icons": {
