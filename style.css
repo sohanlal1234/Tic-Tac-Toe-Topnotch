@@ -20,7 +20,7 @@ body {
 }
 
 a {
-	color: #fff;
+	color: inherit;
 }
 
 a:hover {
